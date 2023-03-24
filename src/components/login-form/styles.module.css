@@ -1,5 +1,5 @@
 .formLogin {
-    background-color: rgba(242, 242, 242, 0.255);
+    background-color: rgba(99, 10, 242, 0.472);
     width: 300px;
     height: 400px;
     display: flex;
@@ -10,8 +10,8 @@
     padding-inline: 20px;
 }
 
-.formLogin label {
-    margin-top: 25px;
+.formLogin p {
+    color: red;
 }
 
 .formLogin input {
