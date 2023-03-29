@@ -1,29 +1,10 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import { LoginForm } from "./components/LoginForm";
 
-function App() {
+export function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-
-        <h1>Hello World</h1>
-
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>Bem vindo ao Instituto Taqtile</h1>
+      <LoginForm />
+    </>
   );
 }
-
-export default App;
