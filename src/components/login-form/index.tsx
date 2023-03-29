@@ -1,5 +1,5 @@
 import styles from './styles.module.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export function LoginForm() {
   const [email, setEmail] = useState('');
@@ -45,8 +45,6 @@ export function LoginForm() {
     }
   }
 
-  console.log(email);
-  console.log(password);
   return (
     <>
       <form className={styles.formLogin} onSubmit={handleSubmit}>
