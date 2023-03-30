@@ -1,5 +1,11 @@
-import styles from './styles.module.css';
-import { useState } from 'react';
+import styles from "./styles.module.css";
+import { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { LOGIN_MUTATION } from "../../auth-validation/login-mutation";
+import {
+  emailRegex,
+  passwordRegex,
+} from "../../auth-validation/regex-email-password";
 
 export function LoginForm() {
   const [email, setEmail] = useState('');
@@ -9,11 +15,16 @@ export function LoginForm() {
   const [errorMessageEmail, setErrorMessageEmail] = useState('');
   const [errorMessagePassword, setErrorMessagePassword] = useState('');
 
+  const [login, { loading, error, data }] = useMutation(LOGIN_MUTATION, {
+    onCompleted({ login }) {
+      localStorage.setItem("token", login.token);
+    },
+  });
+
   function handleChangeEmail(event: any) {
     const newEmail = event.target.value;
     setEmail(newEmail);
 
-    const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     setEmailIsValid(emailRegex.test(newEmail));
   }
 
@@ -21,7 +32,6 @@ export function LoginForm() {
     const newPassword = event.target.value;
     setPassword(newPassword);
 
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+=[\]{}|;':",.<>/?]{7,}$/;
     setPasswordIsValid(passwordRegex.test(newPassword));
   }
   function clearInputs() {
@@ -31,11 +41,23 @@ export function LoginForm() {
     setErrorMessagePassword('');
   }
 
-  function handleSubmit(event: any) {
+  async function handleSubmit(event: any) {
     event.preventDefault();
     if (emailIsValid && passwordIsValid) {
-      console.log('entrando...');
-      clearInputs();
+      try {
+        await login({
+          variables: {
+            data: {
+              email: email,
+              password: password,
+            },
+          },
+        });
+        console.log("entrando....");
+        clearInputs();
+      } catch (error) {
+        alert(error);
+      }
     } else if (!emailIsValid) {
       setErrorMessageEmail('O email deve conter email@email.com');
     } else if (!passwordIsValid) {
