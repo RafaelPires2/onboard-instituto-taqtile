@@ -1,11 +1,8 @@
-import styles from "./styles.module.css";
-import { useState } from "react";
-import { useMutation } from "@apollo/client";
-import { LOGIN_MUTATION } from "../../auth-validation/login-mutation";
-import {
-  emailRegex,
-  passwordRegex,
-} from "../../auth-validation/regex-email-password";
+import styles from './styles.module.css';
+import { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { LOGIN_MUTATION } from '../../auth-validation/login-mutation';
+import { emailRegex, passwordRegex } from '../../auth-validation/regex-email-password';
 
 export function LoginForm() {
   const [email, setEmail] = useState('');
@@ -17,7 +14,7 @@ export function LoginForm() {
 
   const [login] = useMutation(LOGIN_MUTATION, {
     onCompleted({ login }) {
-      localStorage.setItem("token", login.token);
+      localStorage.setItem('token', login.token);
     },
   });
 
@@ -53,15 +50,10 @@ export function LoginForm() {
             },
           },
         });
-<<<<<<< HEAD
-        console.log("entrando....");
+        console.log('entrando....');
         clearInputs();
       } catch (error) {
         alert(error);
-=======
-      } catch {
-        alert('Email ou senha inválidos, verifique e tente novamente');
->>>>>>> 01b48fe (ref: logics login)
       }
     } else if (!emailIsValid) {
       setErrorMessageEmail('O email deve conter email@email.com');
