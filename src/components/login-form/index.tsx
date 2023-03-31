@@ -15,7 +15,7 @@ export function LoginForm() {
   const [errorMessageEmail, setErrorMessageEmail] = useState('');
   const [errorMessagePassword, setErrorMessagePassword] = useState('');
 
-  const [login, { loading, error, data }] = useMutation(LOGIN_MUTATION, {
+  const [login] = useMutation(LOGIN_MUTATION, {
     onCompleted({ login }) {
       localStorage.setItem("token", login.token);
     },
@@ -53,17 +53,20 @@ export function LoginForm() {
             },
           },
         });
+<<<<<<< HEAD
         console.log("entrando....");
         clearInputs();
       } catch (error) {
         alert(error);
+=======
+      } catch {
+        alert('Email ou senha inválidos, verifique e tente novamente');
+>>>>>>> 01b48fe (ref: logics login)
       }
     } else if (!emailIsValid) {
       setErrorMessageEmail('O email deve conter email@email.com');
     } else if (!passwordIsValid) {
       setErrorMessagePassword('A senha deve conter no mínimo 7 caracteres 1 letra e 1 número');
-    } else {
-      console.error(ErrorEvent);
     }
   }
 
