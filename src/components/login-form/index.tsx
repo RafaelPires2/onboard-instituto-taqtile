@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_MUTATION } from '../../auth-validation/login-mutation';
 import { emailRegex, passwordRegex } from '../../auth-validation/regex-email-password';
+import { useNavigate } from 'react-router-dom';
 
 export function LoginForm() {
   const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ export function LoginForm() {
   const [passwordIsValid, setPasswordIsValid] = useState(false);
   const [errorMessageEmail, setErrorMessageEmail] = useState('');
   const [errorMessagePassword, setErrorMessagePassword] = useState('');
+  const navigate = useNavigate();
 
   const [login] = useMutation(LOGIN_MUTATION, {
     onCompleted({ login }) {
@@ -24,7 +26,6 @@ export function LoginForm() {
 
     setEmailIsValid(emailRegex.test(newEmail));
   }
-
   function handleChangePassword(event: any) {
     const newPassword = event.target.value;
     setPassword(newPassword);
@@ -52,6 +53,7 @@ export function LoginForm() {
         });
         console.log('entrando....');
         clearInputs();
+        return navigate('/dashboard');
       } catch (error) {
         alert(error);
       }
