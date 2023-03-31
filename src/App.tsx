@@ -1,10 +1,20 @@
-import { LoginForm } from './components/login-form';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { Router } from './router';
+import { BrowserRouter } from 'react-router-dom';
+
+const client = new ApolloClient({
+  uri: 'https://template-onboarding-node-sjz6wnaoia-uc.a.run.app/graphql',
+  cache: new InMemoryCache(),
+});
 
 export function App() {
   return (
     <>
-      <h1>Bem vindo ao Instituto Taqtile</h1>
-      <LoginForm />
+      <ApolloProvider client={client}>
+        <BrowserRouter>
+          <Router />
+        </BrowserRouter>
+      </ApolloProvider>
     </>
   );
 }
