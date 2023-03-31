@@ -2,7 +2,7 @@ import styles from './styles.module.css';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_MUTATION } from '../../auth-validation/login-mutation';
-import { emailRegex, passwordRegex } from '../../auth-validation/regex-email-password';
+import { emailRegex, passwordRegex } from '../../auth-validation/regex-validators';
 import { useNavigate } from 'react-router-dom';
 
 export function LoginForm() {
@@ -14,9 +14,11 @@ export function LoginForm() {
   const [errorMessagePassword, setErrorMessagePassword] = useState('');
   const navigate = useNavigate();
 
-  const [login, { loading, error, data }] = useMutation(LOGIN_MUTATION, {
+  const [login] = useMutation(LOGIN_MUTATION, {
     onCompleted({ login }) {
       localStorage.setItem('token', login.token);
+      clearInputs();
+      navigate('/dashboard');
     },
   });
 
@@ -51,18 +53,13 @@ export function LoginForm() {
             },
           },
         });
-        console.log('entrando....');
-        clearInputs();
-        return navigate('/dashboard');
-      } catch (error) {
-        alert(error);
+      } catch {
+        alert('Email ou senha inválidos, verifique e tente novamente');
       }
     } else if (!emailIsValid) {
       setErrorMessageEmail('O email deve conter email@email.com');
     } else if (!passwordIsValid) {
       setErrorMessagePassword('A senha deve conter no mínimo 7 caracteres 1 letra e 1 número');
-    } else {
-      console.error(ErrorEvent);
     }
   }
 
