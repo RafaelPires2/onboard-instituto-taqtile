@@ -1,7 +1,7 @@
 import styles from './styles.module.css';
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { LOGIN_MUTATION } from '../../auth-validation/login-mutation';
+import { LOGIN_MUTATION } from '../../auth-validation/gql-queries';
 import { emailRegex, passwordRegex } from '../../auth-validation/regex-validators';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
