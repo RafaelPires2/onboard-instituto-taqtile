@@ -1,12 +1,19 @@
 import { useQuery } from '@apollo/client';
 import { useState } from 'react';
 import { LIST_USERS_QUERY } from '../../auth-validation/gql-queries';
+import { HiUserAdd } from 'react-icons/hi';
+import styles from './styles.module.css';
+import { PageAddUser } from '../../pages/add-user';
 
 export function UsersList() {
+  const [active, setActive] = useState(false);
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
   const token = localStorage.getItem('token');
 
+  function onPageAddUser() {
+    setActive(true);
+  }
   const { loading, error, data, fetchMore } = useQuery(LIST_USERS_QUERY, {
     context: {
       headers: { authorization: token },
@@ -32,6 +39,11 @@ export function UsersList() {
           <tr>
             <th>Nome</th>
             <th>Email</th>
+            <th>
+              <button className={styles.btnAddUser} onClick={onPageAddUser}>
+                <HiUserAdd size={25} />
+              </button>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -88,6 +100,7 @@ export function UsersList() {
           Próxima
         </button>
       </div>
+      {active === true ? <PageAddUser active={active} setActive={setActive} /> : null}
     </div>
   );
 }
