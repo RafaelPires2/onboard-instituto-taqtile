@@ -28,3 +28,15 @@ export const LIST_USERS_QUERY = gql`
   }
 `;
 
+export const CREATE_USER_MUTATION = gql`
+  mutation createUser($data: UserInput!) {
+    createUser(data: $data) {
+      name
+      phone
+      birthDate
+      email
+      role
+      id
+    }
+  }
+`;

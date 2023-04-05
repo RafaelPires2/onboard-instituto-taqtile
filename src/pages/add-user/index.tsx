@@ -2,20 +2,8 @@ import { differenceInYears, format, isBefore, isValid } from 'date-fns';
 import { birthDateRegex, emailRegex, passwordRegex, phoneRegex } from '../../auth-validation/regex-validators';
 import styles from './styles.module.css';
 import { useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
-
-export const CREATE_USER_MUTATION = gql`
-  mutation createUser($data: UserInput!) {
-    createUser(data: $data) {
-      name
-      phone
-      birthDate
-      email
-      role
-      id
-    }
-  }
-`;
+import { useMutation } from '@apollo/client';
+import { CREATE_USER_MUTATION } from '../../auth-validation/gql-queries';
 
 export function PageAddUser({ active, setActive }: any) {
   const [birthDate, setBirthDate] = useState('');
