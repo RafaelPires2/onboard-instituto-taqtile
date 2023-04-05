@@ -32,9 +32,9 @@ export function PageAddUser({ active, setActive }: any) {
   const [errorMessagePhone, setErrorMessagePhone] = useState('');
   const [errorMessageEmail, setErrorMessageEmail] = useState('');
   const [errorMessagePassword, setErrorMessagePassword] = useState('');
+  const token = localStorage.getItem('token');
 
-  const [createUser, { data, loading, error }] = useMutation(CREATE_USER_MUTATION);
-
+  const [createUser] = useMutation(CREATE_USER_MUTATION);
 
   console.log(role);
 
@@ -77,9 +77,12 @@ export function PageAddUser({ active, setActive }: any) {
   async function handleCreateUser(event: any) {
     event.preventDefault();
 
-    if (birthDateIsValid && emailIsValid && phoneIsValid) {
+    if (birthDateIsValid && emailIsValid && phoneIsValid && passwordIsValid) {
       try {
         await createUser({
+          context: {
+            headers: { authorization: token },
+          },
           variables: {
             data: {
               name: name,
@@ -117,19 +120,19 @@ export function PageAddUser({ active, setActive }: any) {
 
         <label htmlFor='email'>Email:</label>
         <input name='email' type='email' placeholder='Email' value={email} onChange={handleChangeEmail} required />
-        {<p>{errorMessageEmail}</p>}
+        {<p className={styles.error}>{errorMessageEmail}</p>}
 
         <label htmlFor='phone'>Telefone:</label>
         <input name='phone' type='tel' placeholder='Telefone' value={phone} onChange={handleChangePhone} maxLength={11} required />
-        {<p>{errorMessagePhone}</p>}
+        {<p className={styles.error}>{errorMessagePhone}</p>}
 
         <label htmlFor='birthDate'>Data de nascimento:</label>
         <input name='birthDate' type='date' placeholder='Data de nascimento' value={birthDate} onChange={handleChangeBirthDate} required />
-        {<p>{errorMessageDate}</p>}
+        {<p className={styles.error}>{errorMessageDate}</p>}
 
-        <label htmlFor='password'>Senha:</label>
-        <input name='password' type='password' placeholder='Senha' value={password} onChange={handleChangePassword} required />
-        <p>{errorMessagePassword}</p>
+        <label htmlFor='password'>Senha</label>
+        <input name='password' type='password' placeholder='Digite sua senha' value={password} onChange={handleChangePassword} required />
+        <p className={styles.error}>{errorMessagePassword}</p>
 
         <label htmlFor='role'>Função:</label>
         <select name='role' value={role} onChange={(e) => setRole(e.target.value)} required>
