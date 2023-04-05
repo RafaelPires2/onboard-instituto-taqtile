@@ -1,4 +1,4 @@
-import { birthDateRegex, emailRegex } from '../../auth-validation/regex-validators';
+import { emailRegex } from '../../auth-validation/regex-validators';
 import styles from './styles.module.css';
 import { useState } from 'react';
 
