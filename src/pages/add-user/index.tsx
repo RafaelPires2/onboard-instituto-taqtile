@@ -24,8 +24,6 @@ export function PageAddUser({ active, setActive }: any) {
 
   const [createUser] = useMutation(CREATE_USER_MUTATION);
 
-  console.log(role);
-
   function handleChangeBirthDate(event: any) {
     const newBirthDate = event.target.value;
     setBirthDate(newBirthDate);
@@ -83,11 +81,10 @@ export function PageAddUser({ active, setActive }: any) {
           },
         });
         alert('usuario cadastrado com sucesso');
-        console.log(name, phone, birthDate, email, role);
 
         setActive(false);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     } else if (!phoneIsValid) {
       setErrorMessagePhone('O telefone deve conter 11 números sem espaço ou caracteres');
