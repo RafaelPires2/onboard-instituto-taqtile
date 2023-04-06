@@ -100,7 +100,9 @@ export function UsersList() {
           Próxima
         </button>
       </div>
-      {activePageAddUser === true ? <PageAddUser active={activePageAddUser} setActive={setActivePageAddUser} /> : null}
+      {activePageAddUser === true ? (
+        <PageAddUser activePageAddUser={activePageAddUser} setActivePageAddUser={setActivePageAddUser} />
+      ) : null}
     </div>
   );
 }
