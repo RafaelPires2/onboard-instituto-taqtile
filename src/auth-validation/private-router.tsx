@@ -1,7 +1,6 @@
 import { Navigate } from 'react-router-dom';
+import { GetToken } from './get-token';
 
 export function PrivateRouter({ children }: { children: JSX.Element }) {
-  const Token = localStorage.getItem('token');
-
-  return Token !== null ? children : <Navigate to='/login' />;
+  return GetToken !== null ? children : <Navigate to='/login' />;
 }

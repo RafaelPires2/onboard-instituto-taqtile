@@ -4,19 +4,19 @@ import { LIST_USERS_QUERY } from '../../auth-validation/gql-queries';
 import { HiUserAdd } from 'react-icons/hi';
 import styles from './styles.module.css';
 import { PageAddUser } from '../../pages/add-user';
+import { GetToken } from '../../auth-validation/get-token';
 
 export function UsersList() {
   const [activePageAddUser, setActivePageAddUser] = useState(false);
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
-  const token = localStorage.getItem('token');
 
   function onPageAddUser() {
     setActivePageAddUser(true);
   }
   const { loading, error, data, fetchMore } = useQuery(LIST_USERS_QUERY, {
     context: {
-      headers: { authorization: token },
+      headers: { authorization: GetToken },
     },
     variables: {
       data: {

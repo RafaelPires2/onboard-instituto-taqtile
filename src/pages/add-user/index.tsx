@@ -4,6 +4,7 @@ import styles from './styles.module.css';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { CREATE_USER_MUTATION } from '../../auth-validation/gql-queries';
+import { GetToken } from '../../auth-validation/get-token';
 
 export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
   const [birthDate, setBirthDate] = useState('');
@@ -20,7 +21,6 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
   const [errorMessagePhone, setErrorMessagePhone] = useState('');
   const [errorMessageEmail, setErrorMessageEmail] = useState('');
   const [errorMessagePassword, setErrorMessagePassword] = useState('');
-  const token = localStorage.getItem('token');
 
   const [createUser] = useMutation(CREATE_USER_MUTATION);
 
@@ -67,7 +67,7 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
       try {
         await createUser({
           context: {
-            headers: { authorization: token },
+            headers: { authorization: GetToken },
           },
           variables: {
             data: {
