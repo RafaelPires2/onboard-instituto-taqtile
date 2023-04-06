@@ -6,13 +6,13 @@ import styles from './styles.module.css';
 import { PageAddUser } from '../../pages/add-user';
 
 export function UsersList() {
-  const [active, setActive] = useState(false);
+  const [activePageAddUser, setActivePageAddUser] = useState(false);
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
   const token = localStorage.getItem('token');
 
   function onPageAddUser() {
-    setActive(true);
+    setActivePageAddUser(true);
   }
   const { loading, error, data, fetchMore } = useQuery(LIST_USERS_QUERY, {
     context: {
@@ -100,7 +100,7 @@ export function UsersList() {
           Próxima
         </button>
       </div>
-      {active === true ? <PageAddUser active={active} setActive={setActive} /> : null}
+      {activePageAddUser === true ? <PageAddUser active={activePageAddUser} setActive={setActivePageAddUser} /> : null}
     </div>
   );
 }

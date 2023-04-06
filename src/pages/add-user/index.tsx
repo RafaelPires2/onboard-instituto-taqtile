@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { CREATE_USER_MUTATION } from '../../auth-validation/gql-queries';
 
-export function PageAddUser({ active, setActive }: any) {
+export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
   const [birthDate, setBirthDate] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -82,7 +82,7 @@ export function PageAddUser({ active, setActive }: any) {
         });
         alert('usuario cadastrado com sucesso');
 
-        setActive(false);
+        setActivePageAddUser(false);
       } catch (error) {
         console.error(error);
       }
@@ -127,7 +127,7 @@ export function PageAddUser({ active, setActive }: any) {
 
         <div>
           <button type='submit'>Salvar</button>
-          <button type='button' onClick={() => setActive(false)}>
+          <button type='button' onClick={() => setActivePageAddUser(false)}>
             Cancelar
           </button>
         </div>
