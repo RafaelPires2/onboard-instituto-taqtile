@@ -16,7 +16,7 @@ export function LoginForm() {
   const [loading, setLoading] = useState('Entrar');
   const navigate = useNavigate();
 
-  const [login] = useMutation(LOGIN_MUTATION, {
+  const [login, { error }] = useMutation(LOGIN_MUTATION, {
     onCompleted({ login }) {
       localStorage.setItem('token', login.token);
       clearInputs();
@@ -57,6 +57,9 @@ export function LoginForm() {
           },
         });
       } catch {
+        {
+          error?.message;
+        }
         setLoading('Entrar');
         alert('Email ou senha inválidos, verifique e tente novamente');
       }

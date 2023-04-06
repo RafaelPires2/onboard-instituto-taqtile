@@ -6,6 +6,14 @@ import { useMutation } from '@apollo/client';
 import { CREATE_USER_MUTATION } from '../../auth-validation/gql-queries';
 import { GetToken } from '../../auth-validation/get-token';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { Input } from '../../components/input';
+
+const ERROR_MESSAGES = {
+  date: 'A data de aniversário deve ser válida',
+  phone: 'O telefone deve conter 11 números sem espaço ou caracteres',
+  email: 'O email deve conter email@email.com',
+  password: 'A senha deve conter no mínimo 7 caracteres 1 letra e 1 número',
+};
 
 export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
   const [birthDate, setBirthDate] = useState('');
@@ -18,13 +26,20 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
   const [emailIsValid, setEmailIsValid] = useState(false);
   const [passwordIsValid, setPasswordIsValid] = useState(false);
   const [phoneIsValid, setPhoneIsValid] = useState(false);
-  const [errorMessageDate, setErrorMessageDate] = useState('');
-  const [errorMessagePhone, setErrorMessagePhone] = useState('');
-  const [errorMessageEmail, setErrorMessageEmail] = useState('');
-  const [errorMessagePassword, setErrorMessagePassword] = useState('');
   const [loading, setLoading] = useState('Entrar');
+  const [error, setError] = useState({
+    date: '',
+    phone: '',
+    email: '',
+    password: '',
+  });
 
-  const [createUser] = useMutation(CREATE_USER_MUTATION);
+  const [createUser, { data }] = useMutation(CREATE_USER_MUTATION, {
+    onCompleted: () => {
+      alert('usuario cadastrado com sucesso');
+      setActivePageAddUser(false);
+    },
+  });
 
   function handleChangeBirthDate(event: any) {
     const newBirthDate = event.target.value;
@@ -65,63 +80,88 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
   async function handleCreateUser(event: any) {
     event.preventDefault();
 
-    if (birthDateIsValid && emailIsValid && phoneIsValid && passwordIsValid) {
-      setLoading('Carregando...');
-      try {
-        await createUser({
-          context: {
-            headers: { authorization: GetToken },
-          },
-          variables: {
-            data: {
-              name: name,
-              phone: phone,
-              birthDate: birthDate,
-              email: email,
-              role: role,
-              password: password,
-            },
-          },
-        });
-        alert('usuario cadastrado com sucesso');
+    if (!birthDateIsValid || !emailIsValid || !phoneIsValid || !passwordIsValid) {
+      setError({
+        date: !birthDateIsValid ? ERROR_MESSAGES.date : '',
+        email: !emailIsValid ? ERROR_MESSAGES.email : '',
+        phone: !phoneIsValid ? ERROR_MESSAGES.phone : '',
+        password: !passwordIsValid ? ERROR_MESSAGES.password : '',
+      });
+      return;
+    }
 
-        setActivePageAddUser(false);
-      } catch (error) {
-        setLoading('Entrar');
-        console.error(error);
-      }
-    } else if (!phoneIsValid) {
-      setErrorMessagePhone('O telefone deve conter 11 números sem espaço ou caracteres');
-    } else if (!emailIsValid) {
-      setErrorMessageEmail('O email deve conter email@email.com');
-    } else if (!birthDateIsValid) {
-      setErrorMessageDate('A data de aniversário deve ser válida');
-    } else if (!passwordIsValid) {
-      setErrorMessagePassword('A senha deve conter no mínimo 7 caracteres 1 letra e 1 número');
+    setLoading('Carregando...');
+    try {
+      await createUser({
+        context: {
+          headers: { authorization: GetToken },
+        },
+        variables: {
+          data: {
+            name: name,
+            phone: phone,
+            birthDate: birthDate,
+            email: email,
+            role: role,
+            password: password,
+          },
+        },
+      });
+    } catch (error) {
+      setLoading('Entrar');
+      console.error(error);
     }
   }
 
   return (
     <div className={styles.container}>
       <form className={styles.form} onSubmit={handleCreateUser}>
-        <label htmlFor='name'>Nome:</label>
-        <input name='name' type='text' placeholder='Nome' value={name} onChange={(e) => setName(e.target.value)} required />
+        <Input label='Nome:' name='name' type='text' placeholder='Nome' value={name} onChange={(e) => setName(e.target.value)} required />
 
-        <label htmlFor='email'>Email:</label>
-        <input name='email' type='email' placeholder='Email' value={email} onChange={handleChangeEmail} required />
-        {<p className={styles.error}>{errorMessageEmail}</p>}
+        <Input
+          label='Email:'
+          name='email'
+          type='email'
+          placeholder='email'
+          value={email}
+          onChange={handleChangeEmail}
+          required
+          errorMessage={error.email}
+        />
 
-        <label htmlFor='phone'>Telefone:</label>
-        <input name='phone' type='tel' placeholder='Telefone' value={phone} onChange={handleChangePhone} maxLength={11} required />
-        {<p className={styles.error}>{errorMessagePhone}</p>}
+        <Input
+          label='Telefone:'
+          name='phone'
+          type='tel'
+          placeholder='Telefone'
+          value={phone}
+          onChange={handleChangePhone}
+          required
+          errorMessage={error.phone}
+          maxLength={11}
+        />
 
-        <label htmlFor='birthDate'>Data de nascimento:</label>
-        <input name='birthDate' type='date' placeholder='Data de nascimento' value={birthDate} onChange={handleChangeBirthDate} required />
-        {<p className={styles.error}>{errorMessageDate}</p>}
+        <Input
+          label='Data de nascimento'
+          name='birthDate'
+          type='date'
+          placeholder='Data de nascimento'
+          value={birthDate}
+          onChange={handleChangeBirthDate}
+          required
+          errorMessage={error.date}
+        />
 
-        <label htmlFor='password'>Senha</label>
-        <input name='password' type='password' placeholder='Digite sua senha' value={password} onChange={handleChangePassword} required />
-        <p className={styles.error}>{errorMessagePassword}</p>
+        <Input
+          label='Senha'
+          name='password'
+          type='password'
+          placeholder='Digite sua senha'
+          value={password}
+          onChange={handleChangePassword}
+          required
+          errorMessage={error.password}
+        />
 
         <label htmlFor='role'>Função:</label>
         <select name='role' value={role} onChange={(e) => setRole(e.target.value)} required>
