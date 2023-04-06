@@ -1,10 +1,11 @@
 import { differenceInYears, format, isBefore, isValid } from 'date-fns';
 import { birthDateRegex, emailRegex, passwordRegex, phoneRegex } from '../../auth-validation/regex-validators';
 import styles from './styles.module.css';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { CREATE_USER_MUTATION } from '../../auth-validation/gql-queries';
 import { GetToken } from '../../auth-validation/get-token';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
   const [birthDate, setBirthDate] = useState('');
@@ -21,6 +22,7 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
   const [errorMessagePhone, setErrorMessagePhone] = useState('');
   const [errorMessageEmail, setErrorMessageEmail] = useState('');
   const [errorMessagePassword, setErrorMessagePassword] = useState('');
+  const [loading, setLoading] = useState('Entrar');
 
   const [createUser] = useMutation(CREATE_USER_MUTATION);
 
@@ -64,6 +66,7 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
     event.preventDefault();
 
     if (birthDateIsValid && emailIsValid && phoneIsValid && passwordIsValid) {
+      setLoading('Carregando...');
       try {
         await createUser({
           context: {
@@ -84,6 +87,7 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
 
         setActivePageAddUser(false);
       } catch (error) {
+        setLoading('Entrar');
         console.error(error);
       }
     } else if (!phoneIsValid) {
@@ -126,7 +130,16 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
         </select>
 
         <div>
-          <button type='submit'>Salvar</button>
+          <button type='submit' disabled={loading === 'Carregando...'}>
+            {loading === 'Carregando...' ? (
+              <React.Fragment>
+                <AiOutlineLoading3Quarters />
+                Carregando...
+              </React.Fragment>
+            ) : (
+              'Entrar'
+            )}
+          </button>
           <button type='button' onClick={() => setActivePageAddUser(false)}>
             Cancelar
           </button>
