@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  background-color: rgb(113, 113, 113);
+  width: 100vw;
+  height: 70px;
+  margin-bottom: 70px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 100px;
+  color: black;
+}
+
+.container ul {
+  display: flex;
+  gap: 30px;
+}
+
+body, input, textarea, button, a {
+  font-family: 'Roboto', sans-serif;
+  text-decoration: none;
+  list-style: none;
+  color: inherit;
+}
