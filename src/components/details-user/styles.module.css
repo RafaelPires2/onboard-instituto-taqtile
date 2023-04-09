@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(29, 29, 29, 0.685);
+  z-index: 1;
+  position: fixed;
+  top: 70px;
+  right: 0;
+  width: 500px;
+  height: 500px;
+}
+
+.content {
+  width: 500px;
+  height: 500px;
+  background-color: azure;
+  display: flex;
+}
+
+.content h3 {
+  margin-top: 10px;
+}
+
+.colA, .colB {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
