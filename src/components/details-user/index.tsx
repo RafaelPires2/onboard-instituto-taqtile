@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import styles from './styles.module.css';
 import { GetToken } from '../../auth-validation/get-token';
 import { GET_USER } from '../../auth-validation/gql-queries';
+import React from 'react';
 
 interface UserDataProps {
   user: {
@@ -34,25 +35,18 @@ export function DetailsUser({ selectedUserID, onCloseModal }: DetailsUserProps) 
       {userData && (
         <div className={styles.content}>
           <div className={styles.colA}>
-            <h3>ID:</h3>
-            <p>{userData?.user.id || '-'}</p>
-
-            <h3>Name:</h3>
-            <p>{userData?.user.name || '-'}</p>
-
-            <h3>Email:</h3>
-            <p>{userData?.user.email || '-'}</p>
-          </div>
-
-          <div className={styles.colB}>
-            <h3>Telefone:</h3>
-            <p>{userData?.user.phone || '-'}</p>
-
-            <h3>Data de nascimento:</h3>
-            <p>{userData?.user.birthDate || '-'}</p>
-
-            <h3>Função:</h3>
-            <p>{userData?.user.role || '-'}</p>
+            {Object.entries(userData?.user).map(([key, value]) => {
+              if (key !== '__typename') {
+                // Verificar se a chave é diferente de '__typename'
+                return (
+                  <React.Fragment key={key}>
+                    <h3>{key}:</h3>
+                    <p>{value || '-'}</p>
+                  </React.Fragment>
+                );
+              }
+              return null; // Não renderizar se a chave for '__typename'
+            })}
           </div>
           <button onClick={onCloseModal}>Fechar</button>
         </div>
