@@ -34,23 +34,21 @@ export function DetailsUser({ selectedUserID, onCloseModal }: DetailsUserProps) 
     <div className={styles.container}>
       {userData && (
         <div className={styles.content}>
-          <div className={styles.colA}>
-            {Object.entries(userData?.user).map(([key, value]) => {
-              if (key !== '__typename') {
-                // Verificar se a chave é diferente de '__typename'
-                return (
-                  <React.Fragment key={key}>
-                    <h3>{key}:</h3>
-                    <p>{value || '-'}</p>
-                  </React.Fragment>
-                );
-              }
-              return null; // Não renderizar se a chave for '__typename'
-            })}
-          </div>
-          <button onClick={onCloseModal}>Fechar</button>
+          {Object.entries(userData?.user).map(([key, value]) => {
+            if (key !== '__typename') {
+              // Verificar se a chave é diferente de '__typename'
+              return (
+                <React.Fragment key={key}>
+                  <h3>{key}:</h3>
+                  <p>{value || '-'}</p>
+                </React.Fragment>
+              );
+            }
+            return null; // Não renderizar se a chave for '__typename'
+          })}
         </div>
       )}
+      <button onClick={onCloseModal}>Fechar</button>
       {error && <p>{error.message}</p>}
     </div>
   );

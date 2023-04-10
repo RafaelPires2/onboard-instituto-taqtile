@@ -12,21 +12,16 @@
 }
 
 .content {
-  width: 500px;
-  height: 500px;
-  background-color: azure;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: azure;
 }
 
 .content h3 {
   margin-top: 10px;
 }
 
-.colA, .colB {
-  width: 50%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
