@@ -4,8 +4,8 @@ import { Header } from '../header';
 import { DetailsUser } from '../../components/details-user';
 
 export function Dashboard() {
-  const [showDetails, setShowDetails] = useState<boolean>(false);
-  const [selectedUserID, setSelectedUserID] = useState<string>('');
+  const [showDetails, setShowDetails] = useState(false);
+  const [selectedUserID, setSelectedUserID] = useState('');
 
   const handleUserClick = (userId: string) => {
     setSelectedUserID(userId);
