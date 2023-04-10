@@ -5,6 +5,8 @@ import { LOGIN_MUTATION } from '../../auth-validation/gql-queries';
 import { emailRegex, passwordRegex } from '../../auth-validation/regex-validators';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { Input } from '../input';
+import { CustomButton } from '../button';
 
 export function LoginForm() {
   const [email, setEmail] = useState('');
@@ -73,24 +75,44 @@ export function LoginForm() {
   return (
     <>
       <form className={styles.formLogin} onSubmit={handleSubmit}>
-        <label htmlFor='email'>Email</label>
-        <input name='email' type='text' placeholder='Digite seu email' value={email} onChange={handleChangeEmail} required />
-        <p>{errorMessageEmail}</p>
+        <Input
+          label='Email'
+          name='email'
+          type='text'
+          placeholder='Digite seu email'
+          value={email}
+          onChange={handleChangeEmail}
+          errorMessage={errorMessageEmail}
+          required
+        />
 
-        <label htmlFor='password'>Senha</label>
-        <input name='password' type='password' placeholder='Digite sua senha' value={password} onChange={handleChangePassword} required />
-        <p>{errorMessagePassword}</p>
+        <Input
+          label='Password'
+          name='password'
+          type='password'
+          placeholder='Digite sua senha'
+          value={password}
+          onChange={handleChangePassword}
+          errorMessage={errorMessagePassword}
+          required
+        />
 
-        <button type='submit' disabled={loading === 'Carregando...'}>
-          {loading === 'Carregando...' ? (
-            <React.Fragment>
-              <AiOutlineLoading3Quarters />
-              Carregando...
-            </React.Fragment>
-          ) : (
-            'Entrar'
-          )}
-        </button>
+        <CustomButton
+        className={styles.buttonLogin}
+          type='submit'
+          disabled={loading === 'Carregando...'}
+          content={
+            loading === 'Carregando...' ? (
+              <React.Fragment>
+                <AiOutlineLoading3Quarters />
+                Carregando...
+              </React.Fragment>
+            ) : (
+              'Entrar'
+            )
+          }
+        />
+
       </form>
     </>
   );

@@ -28,3 +28,13 @@ body, input, textarea, button, a {
   list-style: none;
   color: inherit;
 }
+
+.buttonLogout {
+  width: 100px;
+  height: 47px;
+  background-color: rgb(173, 23, 3);
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+}

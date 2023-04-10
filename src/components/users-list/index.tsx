@@ -5,6 +5,7 @@ import { HiUserAdd } from 'react-icons/hi';
 import styles from './styles.module.css';
 import { PageAddUser } from '../../pages/add-user';
 import { GetToken } from '../../auth-validation/get-token';
+import { CustomButton } from '../button';
 
 interface UserListProps {
   onUserClick: (userId: string) => void;
@@ -42,7 +43,7 @@ export function UsersList({ onUserClick }: UserListProps) {
   const totalPages = Math.ceil(data.users.count / limit);
 
   return (
-    <div>
+    <div className={styles.containerTable}>
       <table>
         <thead>
           <tr>
@@ -64,8 +65,10 @@ export function UsersList({ onUserClick }: UserListProps) {
           ))}
         </tbody>
       </table>
-      <div>
-        <button
+      <div className={styles.containerButton}>
+        <CustomButton
+          className={styles.button}
+          type='button'
           onClick={() =>
             hasPreviousPage &&
             fetchMore({
@@ -82,13 +85,16 @@ export function UsersList({ onUserClick }: UserListProps) {
               },
             })
           }
-        >
-          Anterior
-        </button>
+          content='ANTERIOR'
+        />
+
         <p>
           Página {Math.floor(offset / limit) + 1} de {totalPages}
         </p>
-        <button
+
+        <CustomButton
+          className={styles.button}
+          type='button'
           onClick={() =>
             hasNextPage &&
             fetchMore({
@@ -105,9 +111,8 @@ export function UsersList({ onUserClick }: UserListProps) {
               },
             })
           }
-        >
-          Próxima
-        </button>
+          content='PRÓXIMO'
+        />
       </div>
       {activePageAddUser === true ? (
         <PageAddUser activePageAddUser={activePageAddUser} setActivePageAddUser={setActivePageAddUser} />
