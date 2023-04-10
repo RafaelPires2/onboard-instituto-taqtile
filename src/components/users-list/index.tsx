@@ -9,6 +9,11 @@ import { GetToken } from '../../auth-validation/get-token';
 interface UserListProps {
   onUserClick: (userId: string) => void;
 }
+interface UserProps {
+  id: string;
+  name: string;
+  email: string;
+}
 
 export function UsersList({ onUserClick }: UserListProps) {
   const [activePageAddUser, setActivePageAddUser] = useState(false);
@@ -51,7 +56,7 @@ export function UsersList({ onUserClick }: UserListProps) {
           </tr>
         </thead>
         <tbody>
-          {data.users.nodes.map((user: any) => (
+          {data.users.nodes.map((user: UserProps) => (
             <tr key={user.id} onClick={() => onUserClick(user.id)}>
               <td>{user.name}</td>
               <td>{user.email}</td>
