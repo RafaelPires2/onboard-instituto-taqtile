@@ -1,19 +1,22 @@
-import styles from './styles.module.css';
+import { forwardRef, InputHTMLAttributes } from 'react';
+import { FormComponent } from './styles';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label: string;
   errorMessage?: string;
 }
 
-export function Input(props: InputProps) {
+function CustomInputBase({ type, placeholder, ...props }: CustomInputProps, ref: any) {
   const id = props.id ?? props.name;
 
   return (
-    <>
+    <FormComponent errorMessage={props.errorMessage}>
       <label htmlFor={id}>{props.label}</label>
-      <input className={styles.input} id={id} {...props} />
-      {props.errorMessage && <p className={styles.error}>{props.errorMessage}</p>}
-    </>
+      <input type={type} placeholder={placeholder} {...props} ref={ref} />
+      {props.errorMessage && <p>{props.errorMessage}</p>}
+    </FormComponent>
   );
 }
+
+export const CustomInput = forwardRef(CustomInputBase);

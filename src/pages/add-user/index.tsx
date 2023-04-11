@@ -1,14 +1,14 @@
 import { differenceInYears, format, isBefore, isValid } from 'date-fns';
 import { birthDateRegex, emailRegex, passwordRegex, phoneRegex } from '../../auth-validation/regex-validators';
-import styles from './styles.module.css';
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { CREATE_USER_MUTATION } from '../../auth-validation/gql-queries';
 import { GetToken } from '../../auth-validation/get-token';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { Input } from '../../components/input';
+import { CustomInput } from '../../components/input';
 import { CustomButton } from '../../components/button';
 import { Title } from '../../components/title';
+import { ContainerFormAddUser, FormAddUser } from './styles';
 
 const ERROR_MESSAGES = {
   date: 'A data de aniversário deve ser válida',
@@ -116,13 +116,21 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
   }
 
   return (
-    <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleCreateUser}>
-        <Title className={styles.title} content='Cadastrar Usuário' />
+    <ContainerFormAddUser>
+      <FormAddUser onSubmit={handleCreateUser}>
+        <Title content='Cadastrar Usuário' />
 
-        <Input label='Nome:' name='name' type='text' placeholder='Nome' value={name} onChange={(e) => setName(e.target.value)} required />
+        <CustomInput
+          label='Nome:'
+          name='name'
+          type='text'
+          placeholder='Nome'
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
 
-        <Input
+        <CustomInput
           label='Email:'
           name='email'
           type='email'
@@ -133,7 +141,7 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
           errorMessage={error.email}
         />
 
-        <Input
+        <CustomInput
           label='Telefone:'
           name='phone'
           type='tel'
@@ -145,7 +153,7 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
           maxLength={11}
         />
 
-        <Input
+        <CustomInput
           label='Data de nascimento'
           name='birthDate'
           type='date'
@@ -156,7 +164,7 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
           errorMessage={error.date}
         />
 
-        <Input
+        <CustomInput
           label='Senha'
           name='password'
           type='password'
@@ -173,9 +181,11 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
           <option value='admin'>Admin</option>
         </select>
 
-        <div className={styles.containerButton}>
+        <div className='containerButton'>
           <CustomButton
-            className={styles.buttonSubmit}
+            height='47'
+            width='200'
+            bgButton='green'
             type='submit'
             disabled={loading === 'Criando...'}
             content={
@@ -189,9 +199,17 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
               )
             }
           />
-          <CustomButton className={styles.buttonCancel} type='button' onClick={() => setActivePageAddUser(false)} content='Cancelar' />
+          <CustomButton
+            bgButton='red'
+            height='47'
+            width='150'
+            type='button'
+            onClick={() => setActivePageAddUser(false)}
+            textColor='white'
+            content='CANCELAR'
+          />
         </div>
-      </form>
-    </div>
+      </FormAddUser>
+    </ContainerFormAddUser>
   );
 }

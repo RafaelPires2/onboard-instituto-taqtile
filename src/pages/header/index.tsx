@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import styles from './styles.module.css';
+// import styles from './styles.module.css';
 import { CustomButton } from '../../components/button';
+import { ContainerHeader } from './styles';
 
 function logout() {
   localStorage.removeItem('token');
@@ -12,7 +13,7 @@ function logout() {
 export function Header() {
   return (
     <>
-      <div className={styles.container}>
+      <ContainerHeader>
         <h1>I.T</h1>
         <nav>
           <ul>
@@ -28,8 +29,8 @@ export function Header() {
           </ul>
         </nav>
 
-        <CustomButton className={styles.buttonLogout} type='button' content='SAIR' onClick={logout} />
-      </div>
+        <CustomButton height='47' width='100' bgButton='red' textColor='white' type='button' content='SAIR' onClick={logout} />
+      </ContainerHeader>
     </>
   );
 }

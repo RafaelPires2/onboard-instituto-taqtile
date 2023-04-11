@@ -4,6 +4,7 @@ import { Header } from '../header';
 import { DetailsUser } from '../../components/details-user';
 import styles from './styles.module.css';
 import { Title } from '../../components/title';
+import { ContainerDashboard } from './styles';
 
 export function Dashboard() {
   const [showDetails, setShowDetails] = useState(false);
@@ -15,13 +16,15 @@ export function Dashboard() {
   };
 
   return (
-    <div className={styles.containerDashboard}>
+    <>
       <Header />
-      <Title content='Lista de Usuários' />
+      <ContainerDashboard>
+        <Title content='Lista de Usuários' />
 
-      {showDetails && <DetailsUser onCloseModal={() => setShowDetails(!showDetails)} selectedUserID={selectedUserID} />}
+        {showDetails && <DetailsUser onCloseModal={() => setShowDetails(!showDetails)} selectedUserID={selectedUserID} />}
 
-      <UsersList onUserClick={handleUserClick} />
-    </div>
+        <UsersList onUserClick={handleUserClick} />
+      </ContainerDashboard>
+    </>
   );
 }
