@@ -12,4 +12,8 @@ export const ContainerLogin = styled.div`
   h1 {
     margin-bottom: 50px;
   }
+
+  button {
+    width: 100%;
+  }
 `;

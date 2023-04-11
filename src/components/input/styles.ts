@@ -4,7 +4,7 @@ interface FormComponentProps {
   errorMessage?: string;
 }
 
-export const FormComponent = styled.form<FormComponentProps>`
+export const FormComponent = styled.div<FormComponentProps>`
   margin-bottom: 16px;
   width: 100%;
 
