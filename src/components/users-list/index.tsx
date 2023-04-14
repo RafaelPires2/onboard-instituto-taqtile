@@ -6,7 +6,16 @@ import styles from './styles.module.css';
 import { PageAddUser } from '../../pages/add-user';
 import { GetToken } from '../../auth-validation/get-token';
 
-export function UsersList() {
+interface UserListProps {
+  onUserClick: (userId: string) => void;
+}
+interface UserProps {
+  id: string;
+  name: string;
+  email: string;
+}
+
+export function UsersList({ onUserClick }: UserListProps) {
   const [activePageAddUser, setActivePageAddUser] = useState(false);
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
@@ -47,8 +56,8 @@ export function UsersList() {
           </tr>
         </thead>
         <tbody>
-          {data.users.nodes.map((user: any) => (
-            <tr key={user.id}>
+          {data.users.nodes.map((user: UserProps) => (
+            <tr key={user.id} onClick={() => onUserClick(user.id)}>
               <td>{user.name}</td>
               <td>{user.email}</td>
             </tr>
