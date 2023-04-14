@@ -2,10 +2,10 @@ import { useQuery } from '@apollo/client';
 import { useState } from 'react';
 import { LIST_USERS_QUERY } from '../../auth-validation/gql-queries';
 import { HiUserAdd } from 'react-icons/hi';
-import styles from './styles.module.css';
 import { PageAddUser } from '../../pages/add-user';
 import { GetToken } from '../../auth-validation/get-token';
 import { CustomButton } from '../button';
+import { ContainerTable } from './styles';
 
 interface UserListProps {
   onUserClick: (userId: string) => void;
@@ -43,16 +43,21 @@ export function UsersList({ onUserClick }: UserListProps) {
   const totalPages = Math.ceil(data.users.count / limit);
 
   return (
-    <div className={styles.containerTable}>
+    <ContainerTable>
       <table>
         <thead>
           <tr>
             <th>Nome</th>
             <th>Email</th>
             <th>
-              <button className={styles.btnAddUser} onClick={onPageAddUser}>
-                <HiUserAdd size={25} />
-              </button>
+              <CustomButton
+                width='50'
+                height='50'
+                type='button'
+                bgButton='white'
+                onClick={onPageAddUser}
+                content={<HiUserAdd size={25} />}
+              />
             </th>
           </tr>
         </thead>
@@ -65,9 +70,11 @@ export function UsersList({ onUserClick }: UserListProps) {
           ))}
         </tbody>
       </table>
-      <div className={styles.containerButton}>
+      <div className="containerButton">
         <CustomButton
-          className={styles.button}
+          height='47'
+          width='150'
+          bgButton='green'
           type='button'
           onClick={() =>
             hasPreviousPage &&
@@ -93,7 +100,9 @@ export function UsersList({ onUserClick }: UserListProps) {
         </p>
 
         <CustomButton
-          className={styles.button}
+          height='47'
+          width='150'
+          bgButton='green'
           type='button'
           onClick={() =>
             hasNextPage &&
@@ -117,6 +126,6 @@ export function UsersList({ onUserClick }: UserListProps) {
       {activePageAddUser === true ? (
         <PageAddUser activePageAddUser={activePageAddUser} setActivePageAddUser={setActivePageAddUser} />
       ) : null}
-    </div>
+    </ContainerTable>
   );
 }

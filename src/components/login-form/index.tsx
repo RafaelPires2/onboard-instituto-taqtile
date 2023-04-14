@@ -1,12 +1,12 @@
-import styles from './styles.module.css';
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_MUTATION } from '../../auth-validation/gql-queries';
 import { emailRegex, passwordRegex } from '../../auth-validation/regex-validators';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { Input } from '../input';
+import { CustomInput } from '../input';
 import { CustomButton } from '../button';
+import { FormLogin } from './styles';
 
 export function LoginForm() {
   const [email, setEmail] = useState('');
@@ -73,47 +73,46 @@ export function LoginForm() {
   }
 
   return (
-    <>
-      <form className={styles.formLogin} onSubmit={handleSubmit}>
-        <Input
-          label='Email'
-          name='email'
-          type='text'
-          placeholder='Digite seu email'
-          value={email}
-          onChange={handleChangeEmail}
-          errorMessage={errorMessageEmail}
-          required
-        />
+    <FormLogin onSubmit={handleSubmit}>
+      <CustomInput
+        label='Email'
+        name='email'
+        type='text'
+        placeholder='Digite seu email'
+        value={email}
+        onChange={handleChangeEmail}
+        errorMessage={errorMessageEmail}
+        required
+      />
 
-        <Input
-          label='Password'
-          name='password'
-          type='password'
-          placeholder='Digite sua senha'
-          value={password}
-          onChange={handleChangePassword}
-          errorMessage={errorMessagePassword}
-          required
-        />
+      <CustomInput
+        label='Password'
+        name='password'
+        type='password'
+        placeholder='Digite sua senha'
+        value={password}
+        onChange={handleChangePassword}
+        errorMessage={errorMessagePassword}
+        required
+      />
 
-        <CustomButton
-        className={styles.buttonLogin}
-          type='submit'
-          disabled={loading === 'Carregando...'}
-          content={
-            loading === 'Carregando...' ? (
-              <React.Fragment>
-                <AiOutlineLoading3Quarters />
-                Carregando...
-              </React.Fragment>
-            ) : (
-              'Entrar'
-            )
-          }
-        />
-
-      </form>
-    </>
+      <CustomButton
+        width='260'
+        height='47'
+        type='submit'
+        bgButton='green'
+        disabled={loading === 'Carregando...'}
+        content={
+          loading === 'Carregando...' ? (
+            <React.Fragment>
+              <AiOutlineLoading3Quarters />
+              Carregando...
+            </React.Fragment>
+          ) : (
+            'Entrar'
+          )
+        }
+      />
+    </FormLogin>
   );
 }

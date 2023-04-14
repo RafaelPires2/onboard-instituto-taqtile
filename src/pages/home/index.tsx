@@ -1,16 +1,16 @@
 import { Title } from '../../components/title';
 import { Header } from '../header';
-import styles from './styles.module.css';
+import { ContainerHome } from './styles';
 
 export function Home() {
   return (
     <>
       <Header />
-      <div className={styles.container}>
-        <Title className={styles.title} content='Bem vindo ao Instituto Taqtile' />
+      <ContainerHome>
+        <Title content='Bem vindo ao Instituto Taqtile' />
 
         <p>Onde a oportunidade é real</p>
-      </div>
+      </ContainerHome>
     </>
   );
 }
