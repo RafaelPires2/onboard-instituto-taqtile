@@ -2,3 +2,37 @@
   background-color: transparent;
   border: none;
 }
+
+.button{
+  width: 100px;
+  height: 47px;
+  background-color: rgb(3, 173, 151);
+  color: white;
+  font-weight: 600;
+  border: none;
+}
+
+.containerButton {
+  display: flex;
+  align-items: center;
+  margin-top: 26px;
+  gap: 12px;
+}
+.containerTable{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 700px;
+  background-color: rgba(217, 185, 253, 0.705);
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.containerTable thead, .containerTable tr {
+  text-align: left;
+}
+
+.containerTable th, .containerTable td {
+  padding: 8px;
+  border-bottom: 1px solid black;
+}

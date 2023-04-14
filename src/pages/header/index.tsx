@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
-import { useState, useEffect } from 'react';
+import { CustomButton } from '../../components/button';
 
 function logout() {
   localStorage.removeItem('token');
@@ -28,7 +28,7 @@ export function Header() {
           </ul>
         </nav>
 
-        <button onClick={logout}>Sair</button>
+        <CustomButton className={styles.buttonLogout} type='button' content='SAIR' onClick={logout} />
       </div>
     </>
   );

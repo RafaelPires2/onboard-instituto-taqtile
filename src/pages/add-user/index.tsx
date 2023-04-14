@@ -7,6 +7,8 @@ import { CREATE_USER_MUTATION } from '../../auth-validation/gql-queries';
 import { GetToken } from '../../auth-validation/get-token';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { Input } from '../../components/input';
+import { CustomButton } from '../../components/button';
+import { Title } from '../../components/title';
 
 const ERROR_MESSAGES = {
   date: 'A data de aniversário deve ser válida',
@@ -26,7 +28,7 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
   const [emailIsValid, setEmailIsValid] = useState(false);
   const [passwordIsValid, setPasswordIsValid] = useState(false);
   const [phoneIsValid, setPhoneIsValid] = useState(false);
-  const [loading, setLoading] = useState('Entrar');
+  const [loading, setLoading] = useState('CRIAR CONTA');
   const [error, setError] = useState({
     date: '',
     phone: '',
@@ -90,7 +92,7 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
       return;
     }
 
-    setLoading('Carregando...');
+    setLoading('Criando...');
     try {
       await createUser({
         context: {
@@ -108,7 +110,7 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
         },
       });
     } catch (error) {
-      setLoading('Entrar');
+      setLoading('CRIAR CONTA');
       console.error(error);
     }
   }
@@ -116,6 +118,8 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
   return (
     <div className={styles.container}>
       <form className={styles.form} onSubmit={handleCreateUser}>
+        <Title className={styles.title} content='Cadastrar Usuário' />
+
         <Input label='Nome:' name='name' type='text' placeholder='Nome' value={name} onChange={(e) => setName(e.target.value)} required />
 
         <Input
@@ -169,20 +173,23 @@ export function PageAddUser({ activePageAddUser, setActivePageAddUser }: any) {
           <option value='admin'>Admin</option>
         </select>
 
-        <div>
-          <button type='submit' disabled={loading === 'Carregando...'}>
-            {loading === 'Carregando...' ? (
-              <React.Fragment>
-                <AiOutlineLoading3Quarters />
-                Carregando...
-              </React.Fragment>
-            ) : (
-              'Entrar'
-            )}
-          </button>
-          <button type='button' onClick={() => setActivePageAddUser(false)}>
-            Cancelar
-          </button>
+        <div className={styles.containerButton}>
+          <CustomButton
+            className={styles.buttonSubmit}
+            type='submit'
+            disabled={loading === 'Criando...'}
+            content={
+              loading === 'Criando...' ? (
+                <React.Fragment>
+                  <AiOutlineLoading3Quarters />
+                  Criando...
+                </React.Fragment>
+              ) : (
+                'CRIAR CONTA'
+              )
+            }
+          />
+          <CustomButton className={styles.buttonCancel} type='button' onClick={() => setActivePageAddUser(false)} content='Cancelar' />
         </div>
       </form>
     </div>
